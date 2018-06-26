@@ -29,6 +29,10 @@ for (var i=0;i<32;i++){
         piece[i].color="white";
 }
 Tetragona = Array.from(Tetragona);
+piece=Array.from(piece);
+var current_player = "white";
+var next_player = "black";
+
 
 function move(x1,y1,x2,y2,ev){
     var pos1b=chessboard[x1][y1];
@@ -78,24 +82,24 @@ function move(x1,y1,x2,y2,ev){
     //ektelesi
     if (!pos2b.hasChildNodes()){
         ev.target.appendChild(pos1b.firstChild);
-        //do_after_valid_move();
+        do_after_valid_move();
     }
     else if (pos2b.firstChild.color == pos1b.firstChild.color)
         return;
     else {
-        ev.target.appendChild(pos1b.firstChild);
-        ev.target.removeChild(pos2b.firstChild);
-        //do_after_valid_move();
+        ev.neu_target.appendChild(pos1b.firstChild);
+        ev.neu_target.removeChild(pos2b.firstChild);
+        do_after_valid_move();
     }
 }
-/*
+
 function do_after_valid_move(){
     var temp = current_player;
     current_player = next_player;
     next_player = temp;
 }
-*/
 
+//Drag n drop
 Tetragona.forEach(accept_drag);
 piece.forEach(make_dragable);
 
@@ -104,7 +108,6 @@ function accept_drag(item, index){
     item.setAttribute("ondragover", "allowDrop(event)");
     
 }
-
 
 function make_dragable(item, index){
     item.setAttribute("draggable", "true");
@@ -122,19 +125,32 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
+   
     var data = ev.dataTransfer.getData("text");
     var attacker = document.getElementById(data);
-    console.log(attacker);
-    console.log(ev.target);
-    console.log("Target is ", Tetragona.indexOf(ev.target));
-    console.log("Atacker is ", Tetragona.indexOf(attacker.parentNode));
+    console.log("attacker:",attacker);
+    console.log("target :", ev.target);
+    console.log(piece.includes(ev.target));
+    if (piece.includes(ev.target)){
+        ev.neu_target = ev.target.parentNode;
+        console.log("ev.neu_target",ev.neu_target);
+    }
+    console.log("ev.neutarget", ev.neu_target);
     var x1 = parseInt(Tetragona.indexOf(attacker.parentNode)/8);
     var y1 = Tetragona.indexOf(attacker.parentNode)%8;
     var x2= parseInt(Tetragona.indexOf(ev.target)/8);
     var y2 =Tetragona.indexOf(ev.target)%8;
-    console.log("Attacker x,y ", x1,y1);
-    console.log("Target x,y ", x2,y2);
-    move(x1,y1,x2,y2,ev);
+    
+    if (ev.neu_target){
+        x2= parseInt(Tetragona.indexOf(ev.neu_target)/8);
+        y2 =Tetragona.indexOf(ev.neu_target)%8;
+    }
+    //console.log("Target is ", Tetragona.indexOf(ev.target));
+    //console.log("Atacker is ", Tetragona.indexOf(attacker.parentNode));
+    
+    
+    if (attacker.color==current_player)
+        move(x1,y1,x2,y2,ev);
 }
 
 function control_diagonal(x1,y1,x2,y2){
@@ -307,32 +323,6 @@ function control_knight_move(x1,y1,x2,y2){
     return false;
 }
 
-//read moves from form 
-/*
-function read_move(){
-    var pos1 = document.getElementById("pos1").value;
-    var pos2 = document.getElementById("pos2").value;
-    
-    var lines = "87654321";
-    var columns="ABCDEFGH";
-    var x1=lines.indexOf(pos1[1]);
-    var y1=columns.indexOf(pos1[0]);
-    var x2= lines.indexOf(pos2[1]);
-    var y2=columns.indexOf(pos2[0]);
-
-    if (current_player == "BLACK" && chessboard[x1][y1].firstChild.color=="white"){
-        console.log("Its blacks turn");
-        return;
-    }
-    if (current_player == "WHITE" && chessboard[x1][y1].firstChild.color=="black"){
-        console.log("Its whites turn");
-        return;
-    }
-
-    move(x1,y1,x2,y2);
-    document.getElementById("player").innerHTML = current_player + " TURN";
-}
-*/
 
 
 
