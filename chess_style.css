@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 3px;
+}
+
+tbody td {
+    width:  60px;
+    height: 60px;
+    text-align: center;
+}
+
+#player {
+    background-color: cadetblue;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+thead td, tfoot td{
+    height: 30;
+    width:  60px;
+    text-align: center;
+}
+
+li {
+    width:  20px;
+    height: 65px;
+    list-style-type: none;
+}
+
+li:first-child{
+    height: 50px;
+}
+
+tbody {
+    border: 2px solid rgb(167, 95, 95);
+    border-radius: 5px;
+}
+
+tbody tr:nth-child(odd) td:nth-child(even) {
+    background: rgb(231, 226, 226);
+}
+
+tbody tr:nth-child(even) td:nth-child(odd) {
+    background: rgb(231, 226, 226);
+}
+
+tbody tr:last-child{
+    background:white;
+}
+
+tbody td {
+    border: 2px solid rgb(39, 30, 30);
+    border-radius: 5px;
+}
+
+li,thead,tfoot{
+    font: 20px bold;
+}
+tbody div {
+    font-size: 35px;
+}
+
+#data_entry{
+    margin: 20px;
+    font: 20px bold;
+    
+}
+
+input {
+    width : 50px;
+}
+
+.flex-container {
+    display: flex;
+  }
