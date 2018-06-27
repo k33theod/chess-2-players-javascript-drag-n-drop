@@ -28,34 +28,30 @@ for (var i=0;i<32;i++){
     else
         piece[i].color="white";
 }
+
 Tetragona = Array.from(Tetragona);
 piece=Array.from(piece);
 var current_player = "white";
 var next_player = "black";
 
-
 function move(x1,y1,x2,y2,ev){
     var pos1b=chessboard[x1][y1];
     var pos2b=chessboard[x2][y2];
-
     //elegxos gia king
     if (pos1b.firstChild.pown=="King"){
         if (!control_king_move(x1,y1,x2,y2)) 
             return;
     }
-
     //elegxos gia queen
     if (pos1b.firstChild.pown=="Queen"){
         if (!control_queen_move(x1,y1,x2,y2)) 
             return;
     }
-
     //elegxos gia rook
     if (pos1b.firstChild.pown=="Rook"){
         if (!control_rook_move(x1,y1,x2,y2)) 
             return;
     }
-
     //elegxos gia bishop
     if (pos1b.firstChild.pown=="Bishop"){
         if (!control_bishop_move(x1,y1,x2,y2)) 
@@ -66,19 +62,16 @@ function move(x1,y1,x2,y2,ev){
         if (!control_knight_move(x1,y1,x2,y2))
             return;
     }
-
     //elegxos gia black pawn
     if(pos1b.firstChild.pown=="Pawn" && pos1b.firstChild.color=="black"){
         if (!control_black_pawn(x1,y1,x2,y2))
             return;
     }
-
     //elegxos gia white pawn
     if(pos1b.firstChild.pown=="Pawn" && pos1b.firstChild.color=="white"){
         if (!control_white_pawn(x1,y1,x2,y2))
             return;
     }
-
     //ektelesi
     if (!pos2b.hasChildNodes()){
         ev.target.appendChild(pos1b.firstChild);
@@ -106,7 +99,6 @@ piece.forEach(make_dragable);
 function accept_drag(item, index){
     item.setAttribute("ondrop", "drop(event)");
     item.setAttribute("ondragover", "allowDrop(event)");
-    
 }
 
 function make_dragable(item, index){
@@ -128,27 +120,17 @@ function drop(ev) {
    
     var data = ev.dataTransfer.getData("text");
     var attacker = document.getElementById(data);
-    console.log("attacker:",attacker);
-    console.log("target :", ev.target);
-    console.log(piece.includes(ev.target));
     if (piece.includes(ev.target)){
         ev.neu_target = ev.target.parentNode;
-        console.log("ev.neu_target",ev.neu_target);
     }
-    console.log("ev.neutarget", ev.neu_target);
     var x1 = parseInt(Tetragona.indexOf(attacker.parentNode)/8);
     var y1 = Tetragona.indexOf(attacker.parentNode)%8;
     var x2= parseInt(Tetragona.indexOf(ev.target)/8);
     var y2 =Tetragona.indexOf(ev.target)%8;
-    
     if (ev.neu_target){
         x2= parseInt(Tetragona.indexOf(ev.neu_target)/8);
         y2 =Tetragona.indexOf(ev.neu_target)%8;
     }
-    //console.log("Target is ", Tetragona.indexOf(ev.target));
-    //console.log("Atacker is ", Tetragona.indexOf(attacker.parentNode));
-    
-    
     if (attacker.color==current_player)
         move(x1,y1,x2,y2,ev);
 }
@@ -158,7 +140,6 @@ function control_diagonal(x1,y1,x2,y2){
         return true;
     if (Math.abs(x2-x1)==Math.abs(y2-y1) && Math.abs(x2-x1)>1){
         if (x2>x1 && y2>y1){
-            console.log("aujanei to x kai to y");
             var i = x1+1;
             var j = y1+1;
             while (i<x2){
